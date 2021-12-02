@@ -1,17 +1,14 @@
-package Advent2021;
+package Advent2021.DayOne;
 
+import Advent2021.DayOne.DayOnePartTwo;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.in;
 
 @Tag("Unit")
 public class DayOnePartTwoTests

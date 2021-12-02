@@ -1,5 +1,6 @@
-package Advent2021;
+package Advent2021.DayOne;
 
+import Advent2021.DayOne.DayOnePartOne;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 

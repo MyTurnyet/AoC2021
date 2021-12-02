@@ -1,17 +1,44 @@
-package Advent2021;
+package Advent2021.DayTwo;
 
+import Advent2021.DayTwo.DayTwoPartOne;
+import Advent2021.DayTwo.MoveOrder;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Tag("Unit")
-public class DayTwoPartTwoTests
+public class DayTwoPartOneTests
 {
     @Test
-    public void should_calculateWithAim()
+    public void should_returnHorizontalMovement_fromMoveOrder()
+    {
+        final MoveOrder moveOrder = new MoveOrder("forward 5");
+        assertThat(moveOrder.addHorizontal(0)).isEqualTo(5);
+        assertThat(moveOrder.addVertical(0)).isEqualTo(0);
+    }
+
+    @Test
+    public void should_returnVerticalMovement_down_fromMoveOrder()
+    {
+        final MoveOrder moveOrder = new MoveOrder("down 2");
+        assertThat(moveOrder.addHorizontal(3)).isEqualTo(3);
+        assertThat(moveOrder.addVertical(0)).isEqualTo(2);
+    }
+
+    @Test
+    public void should_returnVerticalMovement_up_fromMoveOrder()
+    {
+        final MoveOrder moveOrder = new MoveOrder("up 6");
+        assertThat(moveOrder.addHorizontal(7)).isEqualTo(7);
+        assertThat(moveOrder.addVertical(24)).isEqualTo(18);
+    }
+
+    @Test
+    public void should_splitInputAndCreateMoveOrders()
     {
         final String inputString = "forward 5\n" +
                 "down 5\n" +
@@ -19,94 +46,63 @@ public class DayTwoPartTwoTests
                 "up 3\n" +
                 "down 8\n" +
                 "forward 2";
-        final DayTwoPartTwo dayTwoPartTwo = new DayTwoPartTwo();
-        final ArrayList<MoveOrder> moveOrders = dayTwoPartTwo.splitInputToMoveOrders(inputString);
-        final int sumMovements = dayTwoPartTwo.sumMovements(moveOrders);
-        assertThat(sumMovements).isEqualTo(900);
+        final DayTwoPartOne dayTwoPartOne = new DayTwoPartOne();
+        final ArrayList<MoveOrder> moveOrders = dayTwoPartOne.splitInputToMoveOrders(inputString);
+        assertThat(moveOrders.size()).isEqualTo(6);
+    }
 
-    }    @Test
-    public void should_calculateWithAim_actual()
+    @Test
+    public void should_sumMovements_to150()
+    {
+        final MoveOrder forward5 = new MoveOrder("forward 5");
+        final MoveOrder down5 = new MoveOrder("down 5");
+        final MoveOrder forward8 = new MoveOrder("forward 8");
+        final MoveOrder up3 = new MoveOrder("up 3");
+        final MoveOrder forward2 = new MoveOrder("forward 2");
+        final MoveOrder down8 = new MoveOrder("down 8");
+        final List<MoveOrder> moveOrders = List.of(forward5, down5, forward8, up3, forward2, down8);
+        final DayTwoPartOne dayTwoPartOne = new DayTwoPartOne();
+        final int sumMovements = dayTwoPartOne.sumMovements(moveOrders);
+        assertThat(sumMovements).isEqualTo(150);
+    }
+
+    @Test
+    public void should_sumMovements_to54()
+    {
+        final MoveOrder forward5 = new MoveOrder("forward 3");
+        final MoveOrder down5 = new MoveOrder("down 8");
+        final MoveOrder forward8 = new MoveOrder("forward 1");
+        final MoveOrder up3 = new MoveOrder("up 3");
+        final MoveOrder forward2 = new MoveOrder("forward 2");
+        final MoveOrder down8 = new MoveOrder("down 4");
+        final List<MoveOrder> moveOrders = List.of(forward5, down5, forward8, up3, forward2, down8);
+        final DayTwoPartOne dayTwoPartOne = new DayTwoPartOne();
+        final int sumMovements = dayTwoPartOne.sumMovements(moveOrders);
+        assertThat(sumMovements).isEqualTo(54);
+    }
+
+    @Test
+    public void should_processTheEntireInput()
+    {
+        final String inputString = "forward 5\n" +
+                "down 5\n" +
+                "forward 8\n" +
+                "up 3\n" +
+                "down 8\n" +
+                "forward 2";
+        final DayTwoPartOne dayTwoPartOne = new DayTwoPartOne();
+        final int totalValue = dayTwoPartOne.processInput(inputString);
+        assertThat(totalValue).isEqualTo(150);
+    }
+    @Test
+    public void should_process_andGetRealValue()
     {
         final String inputString = getActualInput();
-        final DayTwoPartTwo dayTwoPartTwo = new DayTwoPartTwo();
-        final ArrayList<MoveOrder> moveOrders = dayTwoPartTwo.splitInputToMoveOrders(inputString);
-        final int sumMovements = dayTwoPartTwo.sumMovements(moveOrders);
-        assertThat(sumMovements).isEqualTo(1698850445);
-
+        final DayTwoPartOne dayTwoPartOne = new DayTwoPartOne();
+        final int totalValue = dayTwoPartOne.processInput(inputString);
+        assertThat(totalValue).isEqualTo(1694130    );
     }
 
-    @Test
-    public void should_addAimToDepth_whenMovingForward_to4()
-    {
-        final MoveOrder moveOrder = new MoveOrder("forward 2");
-        int currentDepth = 0;
-        int currentAim = 2;
-        final int depthAfterMove = moveOrder.addDepthWithAim(currentDepth, currentAim);
-        assertThat(depthAfterMove).isEqualTo(4);
-    }
-
-    @Test
-    public void should_addAimToDepth_whenMovingForward_10()
-    {
-        final MoveOrder moveOrder = new MoveOrder("forward 2");
-        int currentDepth = 6;
-        int currentAim = 2;
-        final int depthAfterMove = moveOrder.addDepthWithAim(currentDepth, currentAim);
-        assertThat(depthAfterMove).isEqualTo(10);
-    }
-    @Test
-    public void should_addAimToDepth_whenMovingForward_withAim0()
-    {
-        final MoveOrder moveOrder = new MoveOrder("forward 2");
-        int currentDepth = 6;
-        int currentAim = 0;
-        final int depthAfterMove = moveOrder.addDepthWithAim(currentDepth, currentAim);
-        assertThat(depthAfterMove).isEqualTo(6);
-    }
-
-    @Test
-    public void shouldNot_addAimToDepth_whenNotMovingForward()
-    {
-        final MoveOrder moveOrder = new MoveOrder("down 2");
-        int currentDepth = 6;
-        int currentAim = 2;
-        final int depthAfterMove = moveOrder.addDepthWithAim(currentDepth, currentAim);
-        assertThat(depthAfterMove).isEqualTo(6);
-    }
-    @Test
-    public void should_addAimToMovement_withNegativeAim()
-    {
-        final MoveOrder moveOrder = new MoveOrder("forward 2");
-        int currentDepth = 6;
-        int currentAim = -3;
-        final int depthAfterMove = moveOrder.addDepthWithAim(currentDepth, currentAim);
-        assertThat(depthAfterMove).isEqualTo(0);
-    }
-
-    @Test
-    public void should_notAddAimToCurrentAim_whenMovingForward()
-    {
-        final MoveOrder moveOrder = new MoveOrder("forward 2");
-        int currentAim = 0;
-        final int updateAim = moveOrder.updateAim(currentAim);
-        assertThat(updateAim).isEqualTo(0);
-    }
-    @Test
-    public void should_AddAimToCurrentAim_whenMovingDown()
-    {
-        final MoveOrder moveOrder = new MoveOrder("down 2");
-        int currentAim = 0;
-        final int updateAim = moveOrder.updateAim(currentAim);
-        assertThat(updateAim).isEqualTo(2);
-    }
-    @Test
-    public void should_SubtractAimFromCurrentAim_whenMovingUp()
-    {
-        final MoveOrder moveOrder = new MoveOrder("up 2");
-        int currentAim = 0;
-        final int updateAim = moveOrder.updateAim(currentAim);
-        assertThat(updateAim).isEqualTo(-2);
-    }
     private String getActualInput()
     {
         return "forward 2\n" +

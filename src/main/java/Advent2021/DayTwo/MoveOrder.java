@@ -1,4 +1,4 @@
-package Advent2021;
+package Advent2021.DayTwo;
 
 import java.util.Objects;
 
