@@ -86,7 +86,7 @@ public class DayOnePartTwoTests
         final DayOnePartTwo dayOnePartTwo = new DayOnePartTwo();
         final List<Integer> integerList = splitStringToIntList();
         final int higherCount = dayOnePartTwo.processList(integerList);
-        assertThat(higherCount).isEqualTo(5);
+        assertThat(higherCount).isEqualTo(1739);
     }
 
     public List<Integer> splitStringToIntList()
